@@ -4,9 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Menu, RootStackParamList } from './RootStackParams';
 
-// This is a pull request and branch example
-
-
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 const HomeScreen = memo(() => {
