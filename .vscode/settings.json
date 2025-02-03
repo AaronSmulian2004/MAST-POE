@@ -1,0 +1,8 @@
+{
+    "files.exclude": {
+        "": true,
+        "useEffect(.*?navigation.navigate\\(.*?\\)": true
+    },
+    "search.useGlobalIgnoreFiles": false,
+    "search.useParentIgnoreFiles": true
+}
