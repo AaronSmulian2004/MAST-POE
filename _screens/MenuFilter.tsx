@@ -3,7 +3,7 @@ import {View,Text,FlatList,StyleSheet,} from 'react-native';
 import { Menu } from './RootStackParams';
 import { Picker } from '@react-native-picker/picker';
 
-export default function FilterMenuScreen() {
+export default function MenuFilter() {
   const [selectedValue, setSelectedValue] = useState('Starter');
   const [menuItems] = useState<Menu[]>([
 

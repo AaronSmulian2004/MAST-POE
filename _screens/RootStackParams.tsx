@@ -1,16 +1,13 @@
-
-
 export type Menu = {
-    Value: string;
     DishName: string;
-    Description: string;
-    Course: string;
     Price: number;
+    Course: string;
+    Value: string;
+    Description: string;
 };
 
 export type RootStackParamList = {
-    Home:  undefined; 
-    Addmenu: undefined;
-    FilterMenu: undefined; 
+    Home:  undefined;
+    MenuAdd: undefined;
+    MenuFilter: undefined;
 };
-

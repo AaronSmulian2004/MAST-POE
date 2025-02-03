@@ -9,7 +9,7 @@ type Menu = {
   Price: number;
 };
 
-export default function AddmenuScreen() {
+export default function MenuAdd() {
   const [menuItems, setMenuItems] = useState<Menu[]>([]);
   const [newDish, setNewDish] = useState<Menu>({
     Course: '',
