@@ -1,15 +1,10 @@
-import 'react-native-gesture-handler'; // Moved to the top
-
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator, BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-
 import HomeScreen from './_screens/Home';
 import AddMenuScreen from './_screens/MenuAdd';
-import MenuFilter from './_screens/MenuFilter'; // Correct Import
-// import {Menu} from "./_screens/RootStackParams"; // Not used yet.
+import MenuFilter from './_screens/MenuFilter';
 
 // Define the navigation parameters
 export type RootTabParamList = {
@@ -18,45 +13,43 @@ export type RootTabParamList = {
     MenuFilter: undefined;
 };
 
-
 // type for the navigation prop in each screen
 export type TabScreenNavigationProps<T extends keyof RootTabParamList> = BottomTabNavigationProp<RootTabParamList, T>;
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
 type Menu = {
-  DishName: string
-  Price: number
-  Course: string
-  Value: string
-  Description: string
+    DishName: string
+    Price: number
+    Course: string
+    Description: string
 }
+
 export default function App() {
-    const Menus : Menu[] = [{
-        DishName: "Test Starter",
-        Price: 10.00,
-        Course: "Starter",
-        Value: '',
-        Description: ''
-    },{
-        DishName: "Test Main 1",
-        Price: 12.00,
-        Course: "Main",
-        Value: '',
-        Description: ''
-    },{
-        DishName: "Test Main 2",
-        Price: 12.50,
-        Course: "Main",
-        Value: '',
-        Description: ''
-    },{
-        DishName: "Test Dessert 1",
-        Price: 13.00,
-        Course: "Dessert",
-        Value: '',
-        Description: ''
-    }];
+    const [Menus, setMenus] = useState<Menu[]>([
+        {
+            DishName: "Test Starter",
+            Price: 10.00,
+            Course: "Starter",
+            Description: ''
+        }, {
+            DishName: "Test Main 1",
+            Price: 12.00,
+            Course: "Main",
+            Description: ''
+        }, {
+            DishName: "Test Main 2",
+            Price: 12.50,
+            Course: "Main",
+            Description: ''
+        }, {
+            DishName: "Test Dessert 1",
+            Price: 13.00,
+            Course: "Dessert",
+            Description: ''
+        }
+    ]);
+
     return (
         <NavigationContainer>
             <Tab.Navigator
@@ -86,10 +79,11 @@ export default function App() {
                     tabBarInactiveTintColor: 'gray',
                 })}
             >
-              <Tab.Screen name="Home"  children={()=><HomeScreen propValue={"Initial Value"} />} />
-              <Tab.Screen name="MenuAdd" component={AddMenuScreen} />
-                <Tab.Screen name="MenuFilter" component={MenuFilter} />
+                <Tab.Screen name="Home" children={() => <HomeScreen Menus={Menus} />} />
+                <Tab.Screen name="MenuAdd" children={() => <AddMenuScreen Menus={Menus} setMenus={setMenus} />} />
+                <Tab.Screen name="MenuFilter" children={() => <MenuFilter Menus={Menus} />} />
             </Tab.Navigator>
         </NavigationContainer>
     );
 }
+export {Menu}

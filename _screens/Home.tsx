@@ -2,17 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TabScreenNavigationProps } from '../App';
+import { Menu } from '../App';
 
 type HomeScreenNavigationProp = TabScreenNavigationProps<'Home'>;
 
-interface Props {
-  propValue: string;
+type Props = {
+  Menus: Menu[];
 }
 
-const HomeScreen: React.FC<Props> = ({ propValue }) => {
+const HomeScreen: React.FC<Props> = ({ Menus }) => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const [someCondition, setSomeCondition] = useState(false);
 
+    useEffect(() => {
+        console.log("Menus in HomeScreen:", Menus);
+    }, [Menus]);
 
   return (
     <View style={styles.container}>
