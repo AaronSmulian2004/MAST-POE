@@ -1,1 +1,3 @@
-# mastP3
+-README File:
+-Include a changelog listing all changes implemented since Part 2.
+-Document any refactoring changes you made.
