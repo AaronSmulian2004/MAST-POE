@@ -114,151 +114,80 @@ const HomeScreen: React.FC<Props> = ({ Menus }) => {
     );
 };
 
-const colors = {
-    primary: '#2e86de',          // A vibrant blue as the main color
-    secondary: '#f5b041',        // An inviting orange for accents
-    background: '#f9f9f9',       // Light grey as a clean background
-    textDark: '#333',            // Dark text for readability
-    textLight: '#fff',           // Light text for contrast
-    border: '#ccc',              // Subtle border color
-    success: '#4CAF50',           // Green for success messages
-    error: '#f44336',             // Red for error messages
-};
-
-const typography = {
-    header: 28,
-    title: 22,
-    section: 18,
-    body: 16,
-    small: 12,
-};
-
-const spacing = {
-    small: 8,
-    medium: 16,
-    large: 24,
-    extraLarge: 32,
-};
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.background,
-        padding: spacing.medium,
+        backgroundColor: '#f0f8ff', // AliceBlue
+        paddingTop: 20,
+        paddingHorizontal: 10,
     },
     header: {
-        fontSize: typography.header,
+        fontSize: 28,
         fontWeight: 'bold',
-        color: colors.textLight,
-        backgroundColor: colors.primary,
-        padding: spacing.medium,
         textAlign: 'center',
-        marginBottom: spacing.large,
-        borderRadius: spacing.small,
+        backgroundColor: '#1e90ff', // DodgerBlue
+        color: 'white',
+        padding: 15,
+        marginBottom: 20,
+        borderRadius: 10,
     },
-    title: {
-        fontSize: typography.title,
+    sectionHeader: {
+        fontSize: 20,
         fontWeight: 'bold',
-        color: colors.textDark,
-        marginBottom: spacing.small,
-    },
-    sectionTitle: {
-        fontSize: typography.section,
-        fontWeight: 'bold',
-        color: colors.primary,
-        marginTop: spacing.large,
-        marginBottom: spacing.small,
-        borderBottomWidth: 1,
-        borderBottomColor: colors.border,
-        paddingBottom: spacing.small,
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: colors.border,
-        backgroundColor: colors.textLight,
-        padding: spacing.small,
-        marginBottom: spacing.medium,
-        borderRadius: spacing.small,
-        fontSize: typography.body,
-        color: colors.textDark,
+        backgroundColor: '#ff8c00', // DarkOrange
+        color: 'white',
+        padding: 10,
+        marginBottom: 10,
+        borderRadius: 8,
     },
     menuItem: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: spacing.medium,
-        marginBottom: spacing.small,
-        borderRadius: spacing.small,
-        elevation: 2,
+        backgroundColor: 'white',
+        padding: 15,
+        marginBottom: 10,
+        borderRadius: 8,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 2,
-        backgroundColor: colors.textLight,
+        elevation: 2,
     },
     menuItemText: {
-        fontSize: typography.body,
-        color: colors.textDark,
-    },
-    removeButton: {
-        backgroundColor: colors.error,
-        padding: spacing.small,
-        borderRadius: spacing.small,
-        marginTop: spacing.small,
-    },
-    removeButtonText: {
-        color: colors.textLight,
-        fontSize: typography.body,
-        textAlign: 'center',
-    },
-    button: {
-        backgroundColor: colors.primary,
-        padding: spacing.medium,
-        borderRadius: spacing.small,
-        marginTop: spacing.medium,
-    },
-    buttonText: {
-        color: colors.textLight,
-        fontSize: typography.body,
-        textAlign: 'center',
+        fontSize: 16,
+        color: '#333',
+        marginBottom: 5,
     },
     menuCount: {
-        fontSize: typography.section,
+        fontSize: 18,
         fontWeight: 'bold',
-        color: colors.secondary,
         textAlign: 'center',
-        marginTop: spacing.large,
+        marginTop: 20,
+        color: '#4682b4', // SteelBlue
     },
     averagePriceHeader: {
-        fontSize: typography.section,
+        fontSize: 18,
         fontWeight: 'bold',
-        color: colors.primary,
-        marginTop: spacing.large,
         textAlign: 'center',
+        marginTop: 20,
+        color: '#4682b4', // SteelBlue
     },
     averagePrice: {
-        fontSize: typography.body,
-        color: colors.textDark,
+        fontSize: 16,
         textAlign: 'center',
-        marginTop: spacing.small,
+        marginTop: 5,
+        color: '#333',
     },
-    picker: {
-        height: 50,
-        borderColor: colors.border,
-        borderWidth: 1,
-        borderRadius: spacing.small,
-        marginBottom: spacing.medium,
-        color: colors.textDark,
+    button: {
+        backgroundColor: '#1e90ff', // DodgerBlue
+        padding: 12,
+        borderRadius: 8,
+        marginTop: 20,
+        alignSelf: 'center',
     },
-    sectionHeader: {
-        fontSize: typography.section,
+    buttonText: {
+        color: 'white',
+        fontSize: 16,
         fontWeight: 'bold',
-        backgroundColor: colors.secondary, // Highlight courses
-        color: colors.textLight,
-        padding: spacing.small,
-        marginBottom: spacing.small,
-        borderRadius: spacing.small,
-        textAlign: 'center'
-    }
+    },
 });
 
 export default HomeScreen;
