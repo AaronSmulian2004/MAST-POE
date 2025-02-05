@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { Menu } from "../App";
+import { Picker } from '@react-native-picker/picker';
 
 type Props = {
-  Menus: Menu[];
-  setMenus: React.Dispatch<React.SetStateAction<Menu[]>>;
+    Menus: Menu[];
+    setMenus: React.Dispatch<React.SetStateAction<Menu[]>>;
 }
 
 const MenuAdd: React.FC<Props> = ({Menus, setMenus}) => {
@@ -15,9 +16,13 @@ const MenuAdd: React.FC<Props> = ({Menus, setMenus}) => {
         Price: 0,
     });
 
+    const [selectedCourse, setSelectedCourse] = useState('');
+
+    const courseOptions = ['Starter', 'Main', 'Dessert', 'Side Dish', 'Drink'];
+
     const addDish = () => {
-        if (newDish.DishName && newDish.Course && newDish.Price > 0) {
-            setMenus([...Menus, newDish]);
+        if (newDish.DishName && selectedCourse && newDish.Price > 0) {
+            setMenus([...Menus, { ...newDish, Course: selectedCourse }]);
             setNewDish({ Course: '', DishName: '', Description: '', Price: 0 });
         }
     };
@@ -25,12 +30,19 @@ const MenuAdd: React.FC<Props> = ({Menus, setMenus}) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Add New Dish</Text>
-            <TextInput
-                placeholder="Course"
-                value={newDish.Course}
-                onChangeText={text => setNewDish({ ...newDish, Course: text })}
+
+            <Picker
+                selectedValue={selectedCourse}
                 style={styles.input}
-            />
+                onValueChange={(itemValue) => {
+                    setSelectedCourse(itemValue);
+                }}
+            >
+                {courseOptions.map((course, index) => (
+                    <Picker.Item key={index} label={course} value={course} />
+                ))}
+            </Picker>
+
             <TextInput
                 placeholder="Dish Name"
                 value={newDish.DishName}
