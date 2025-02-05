@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SectionList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TabScreenNavigationProps, Menu } from '../App';
 
@@ -9,18 +9,51 @@ type Props = {
     Menus: Menu[];
 }
 
+type Section = {
+    title: string;
+    data: Menu[];
+}
+
 const HomeScreen: React.FC<Props> = ({ Menus }) => {
     const navigation = useNavigation<HomeScreenNavigationProp>();
-
     const [averagePrices, setAveragePrices] = useState<{ [course: string]: number }>({});
+    const [groupedMenu, setGroupedMenu] = useState<Section[]>([])
 
     useEffect(() => {
         console.log("Menus in HomeScreen:", Menus);
-        calculateAveragePrices(); // Call the function when the component mounts or Menus changes
+        calculateAveragePrices();
     }, [Menus]);
+
+    useEffect(() => {
+        groupMenuByCategory()
+    }, [Menus])
+
+    const groupMenuByCategory = () => {
+        const grouped: { [key: string]: Menu[] } = {}
+
+        Menus.forEach(menu => {
+            if (grouped[menu.Course]) {
+                grouped[menu.Course].push(menu)
+            } else {
+                grouped[menu.Course] = [menu]
+            }
+        })
+
+        const sectionList: Section[] = []
+
+        Object.keys(grouped).forEach(key => {
+            sectionList.push({
+                title: key,
+                data: grouped[key]
+            })
+        })
+
+        setGroupedMenu(sectionList)
+    }
 
     const calculateAveragePrices = () => {
         const courseTotals: { [course: string]: { sum: number; count: number } } = {};
+
         Menus.forEach(item => {
             const course = item.Course;
             if (!courseTotals[course]) {
@@ -34,6 +67,7 @@ const HomeScreen: React.FC<Props> = ({ Menus }) => {
         for (const course in courseTotals) {
             newAveragePrices[course] = courseTotals[course].sum / courseTotals[course].count;
         }
+
         setAveragePrices(newAveragePrices);
     };
 
@@ -42,14 +76,17 @@ const HomeScreen: React.FC<Props> = ({ Menus }) => {
             <Text style={styles.header}>Welcome to the Chef App</Text>
 
             {/* Display the Menu */}
-            <FlatList
-                data={Menus}
-                keyExtractor={(item, index) => index.toString()}
+            <SectionList
+                sections={groupedMenu}
+                keyExtractor={(item, index) => item.DishName + index.toString()}
                 renderItem={({ item }) => (
                     <View style={styles.menuItem}>
                         <Text style={styles.menuItemText}>{item.DishName}</Text>
                         <Text style={styles.menuItemText}>R{item.Price.toFixed(2)}</Text>
                     </View>
+                )}
+                renderSectionHeader={({ section: { title } }) => (
+                    <Text style={styles.sectionHeader}>{title}</Text>
                 )}
             />
 
@@ -64,13 +101,7 @@ const HomeScreen: React.FC<Props> = ({ Menus }) => {
                 </Text>
             ))}
 
-
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('MenuAdd')}
-            >
-                <Text style={styles.buttonText}>Add Menu Item</Text>
-            </TouchableOpacity>
+            {/* Removed the Add Button here */}
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
@@ -83,50 +114,150 @@ const HomeScreen: React.FC<Props> = ({ Menus }) => {
     );
 };
 
+const colors = {
+    primary: '#2e86de',          // A vibrant blue as the main color
+    secondary: '#f5b041',        // An inviting orange for accents
+    background: '#f9f9f9',       // Light grey as a clean background
+    textDark: '#333',            // Dark text for readability
+    textLight: '#fff',           // Light text for contrast
+    border: '#ccc',              // Subtle border color
+    success: '#4CAF50',           // Green for success messages
+    error: '#f44336',             // Red for error messages
+};
+
+const typography = {
+    header: 28,
+    title: 22,
+    section: 18,
+    body: 16,
+    small: 12,
+};
+
+const spacing = {
+    small: 8,
+    medium: 16,
+    large: 24,
+    extraLarge: 32,
+};
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 16,
+        backgroundColor: colors.background,
+        padding: spacing.medium,
     },
     header: {
-        fontSize: 24,
-        marginBottom: 20,
+        fontSize: typography.header,
+        fontWeight: 'bold',
+        color: colors.textLight,
+        backgroundColor: colors.primary,
+        padding: spacing.medium,
+        textAlign: 'center',
+        marginBottom: spacing.large,
+        borderRadius: spacing.small,
     },
-    button: {
-        backgroundColor: 'lightblue',
-        padding: 10,
-        margin: 5,
-        borderRadius: 5,
+    title: {
+        fontSize: typography.title,
+        fontWeight: 'bold',
+        color: colors.textDark,
+        marginBottom: spacing.small,
     },
-    buttonText: {
-        fontSize: 16,
-        textAlign: 'center'
+    sectionTitle: {
+        fontSize: typography.section,
+        fontWeight: 'bold',
+        color: colors.primary,
+        marginTop: spacing.large,
+        marginBottom: spacing.small,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.border,
+        paddingBottom: spacing.small,
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: colors.border,
+        backgroundColor: colors.textLight,
+        padding: spacing.small,
+        marginBottom: spacing.medium,
+        borderRadius: spacing.small,
+        fontSize: typography.body,
+        color: colors.textDark,
     },
     menuItem: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+        padding: spacing.medium,
+        marginBottom: spacing.small,
+        borderRadius: spacing.small,
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+        backgroundColor: colors.textLight,
     },
     menuItemText: {
-        fontSize: 16,
+        fontSize: typography.body,
+        color: colors.textDark,
+    },
+    removeButton: {
+        backgroundColor: colors.error,
+        padding: spacing.small,
+        borderRadius: spacing.small,
+        marginTop: spacing.small,
+    },
+    removeButtonText: {
+        color: colors.textLight,
+        fontSize: typography.body,
+        textAlign: 'center',
+    },
+    button: {
+        backgroundColor: colors.primary,
+        padding: spacing.medium,
+        borderRadius: spacing.small,
+        marginTop: spacing.medium,
+    },
+    buttonText: {
+        color: colors.textLight,
+        fontSize: typography.body,
+        textAlign: 'center',
     },
     menuCount: {
-        fontSize: 18,
-        marginTop: 10,
-        fontWeight: 'bold'
+        fontSize: typography.section,
+        fontWeight: 'bold',
+        color: colors.secondary,
+        textAlign: 'center',
+        marginTop: spacing.large,
     },
     averagePriceHeader: {
-        fontSize: 16,
-        marginTop: 10,
+        fontSize: typography.section,
         fontWeight: 'bold',
+        color: colors.primary,
+        marginTop: spacing.large,
+        textAlign: 'center',
     },
     averagePrice: {
-        fontSize: 14,
-        marginTop: 5,
+        fontSize: typography.body,
+        color: colors.textDark,
+        textAlign: 'center',
+        marginTop: spacing.small,
+    },
+    picker: {
+        height: 50,
+        borderColor: colors.border,
+        borderWidth: 1,
+        borderRadius: spacing.small,
+        marginBottom: spacing.medium,
+        color: colors.textDark,
+    },
+    sectionHeader: {
+        fontSize: typography.section,
+        fontWeight: 'bold',
+        backgroundColor: colors.secondary, // Highlight courses
+        color: colors.textLight,
+        padding: spacing.small,
+        marginBottom: spacing.small,
+        borderRadius: spacing.small,
+        textAlign: 'center'
     }
 });
 
