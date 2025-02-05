@@ -3,13 +3,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator, BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import HomeScreen from './_screens/Home';
-import AddMenuScreen from './_screens/MenuAdd';
+import ManageMenuScreen from './_screens/ManageMenuScreen';
 import MenuFilter from './_screens/MenuFilter';
 
 // Define the navigation parameters
 export type RootTabParamList = {
     Home: undefined;
-    MenuAdd: undefined;
+    ManageMenuScreen: undefined;
     MenuFilter: undefined;
 };
 
@@ -18,7 +18,7 @@ export type TabScreenNavigationProps<T extends keyof RootTabParamList> = BottomT
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
-type Menu = {
+export type Menu = {
     DishName: string
     Price: number
     Course: string
@@ -62,7 +62,7 @@ export default function App() {
                         let iconName: string;
                         if (route.name === 'Home') {
                             iconName = focused ? 'home' : 'home-outline';
-                        } else if (route.name === 'MenuAdd') {
+                        } else if (route.name === 'ManageMenuScreen') {
                             iconName = focused ? 'plus' : 'plus-outline';
                         } else if (route.name === 'MenuFilter') {
                             iconName = focused ? 'filter' : 'filter-outline';
@@ -83,10 +83,9 @@ export default function App() {
                 })}
             >
                 <Tab.Screen name="Home" children={() => <HomeScreen Menus={Menus} />} />
-                <Tab.Screen name="MenuAdd" children={() => <AddMenuScreen Menus={Menus} setMenus={setMenus} />} />
+                <Tab.Screen name="ManageMenuScreen" children={() => <ManageMenuScreen Menus={Menus} setMenus={setMenus} />} />
                 <Tab.Screen name="MenuFilter" children={() => <MenuFilter Menus={Menus} />} />
             </Tab.Navigator>
         </NavigationContainer>
     );
 }
-export {Menu}
