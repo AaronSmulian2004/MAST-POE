@@ -28,25 +28,28 @@ type Menu = {
 export default function App() {
     const [Menus, setMenus] = useState<Menu[]>([
         {
-            DishName: "Test Starter",
-            Price: 10.00,
+            DishName: "Chicken Satay Skewers",
+            Price: 95.00,
             Course: "Starter",
-            Description: ''
-        }, {
-            DishName: "Test Main 1",
-            Price: 12.00,
+            Description: "Grilled chicken skewers marinated in peanut sauce, served with a tangy cucumber relish.",
+        },
+        {
+            DishName: "Peri-Peri Chicken",
+            Price: 220.00,
             Course: "Main",
-            Description: ''
-        }, {
-            DishName: "Test Main 2",
-            Price: 12.50,
+            Description: "Flame-grilled half chicken marinated in spicy peri-peri sauce, served with your choice of side.",
+        },
+        {
+            DishName: "Bobotie",
+            Price: 185.00,
             Course: "Main",
-            Description: ''
-        }, {
-            DishName: "Test Dessert 1",
-            Price: 13.00,
+            Description: "A South African classic! Spiced minced meat baked with an egg custard topping, served with yellow rice and chutney.",
+        },
+        {
+            DishName: "Malva Pudding",
+            Price: 80.00,
             Course: "Dessert",
-            Description: ''
+            Description: "Warm, spongy caramel pudding served with creamy custard. A truly decadent treat!",
         }
     ]);
 
