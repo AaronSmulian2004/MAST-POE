@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Menu } from "../App";
 import { Picker } from '@react-native-picker/picker';
 
@@ -21,7 +21,11 @@ const MenuAdd: React.FC<Props> = ({Menus, setMenus}) => {
     const courseOptions = ['Starter', 'Main', 'Dessert', 'Side Dish', 'Drink'];
 
     const addDish = () => {
-        if (newDish.DishName && selectedCourse && newDish.Price > 0) {
+        if (newDish.DishName && selectedCourse) {
+            if (isNaN(newDish.Price) || newDish.Price <= 0) {
+                Alert.alert("Invalid Price", "Please enter a valid price.");
+                return;
+            }
             setMenus([...Menus, { ...newDish, Course: selectedCourse }]);
             setNewDish({ Course: '', DishName: '', Description: '', Price: 0 });
         }
@@ -56,12 +60,15 @@ const MenuAdd: React.FC<Props> = ({Menus, setMenus}) => {
                 style={styles.input}
             />
             <TextInput
-                placeholder="Price"
-                value={newDish.Price.toString()}
-                onChangeText={text => setNewDish({ ...newDish, Price: parseFloat(text) })}
-                keyboardType="numeric"
-                style={styles.input}
-            />
+            placeholder="Price"
+            value={newDish.Price.toString()}
+            onChangeText={text => {
+            const parsedValue = parseFloat(text);
+            setNewDish({ ...newDish, Price: isNaN(parsedValue) ? 0 : parsedValue });
+            }}
+            keyboardType="numeric"
+            style={styles.input}
+        />
             <Button title="Add Dish" onPress={addDish} />
 
             <FlatList
