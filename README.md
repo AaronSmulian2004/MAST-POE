@@ -4,6 +4,8 @@ Overview
 
 This mobile application, developed in React Native, is designed to help Chef Christoffel manage his personalized culinary experiences. It provides a dynamic menu management system that allows him to easily update menu items, filter them by course, and provide guests with a seamless digital menu experience.
 
+This version of the app is very different from what I submitted for Part 2. I wasn't happy with how Part 2 turned out, so I rewrote most of the code to fix bugs and make it work better.
+
 Key Features
 
     Dynamic Menu Management: Allows Chef Christoffel to add, edit, and remove menu items with ease.
@@ -65,5 +67,6 @@ Video Demonstration
 [Insert Link to Your Video Demo Here]
 
 Conclusion
+
 
 Thank you for reviewing my Portfolio of Evidence. I welcome any feedback and look forward to further developing my skills in mobile application development.
