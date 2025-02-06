@@ -2,13 +2,11 @@ Chef Menu App - Portfolio of Evidence (PoE)
 
 Overview
 
-This mobile application, developed in React Native, is designed to help Chef Christoffel manage his personalized culinary experiences. It provides a dynamic menu management system that allows him to easily update menu items, filter them by course, and provide guests with a seamless digital menu experience.
-
-This version of the app is very different from what I submitted for Part 2. I wasn't happy with how Part 2 turned out, so I rewrote most of the code to fix bugs and make it work better.
+This mobile application, developed in React Native, is designed to help Chef Christoffel manage his personalised culinary experiences. It provides a dynamic menu management system that allows him to easily update menu items, filter them by course, and provide guests with a seamless digital menu experience.
 
 Key Features
 
-    Dynamic Menu Management: Allows Chef Christoffel to add, edit, and remove menu items with ease.
+    Dynamic Menu Management: Allows Chef Christoffel to add, edit and remove menu items with ease.
 
     Predefined Course List: Uses a dropdown/picker to select from a predefined list of courses (Starter, Main, Dessert, etc.).
 
@@ -16,15 +14,13 @@ Key Features
 
     Average Price Calculation: Calculates and displays the average price of menu items for each course.
 
-    Data Persistence: Not implemented
-
-    Responsive Design: Uses CSS for styling (and it is not correct)
+    Design: Uses CSS for styling 
 
     Complete Changlog:
 
 Project Structure
 
-The project is organized into the following directories:
+The project is organised into the following directories:
 
     App.tsx: Contains the main application component, navigation setup, and global state management.
 
@@ -52,7 +48,7 @@ Refactoring Changes
 
 The following changes were made during the refactoring phase:
 
-    Centralized state management in App.tsx using the useState hook to create a more organized single version of truth.
+    Centralised state management in App.tsx using the useState hook to create a more organised single version of truth.
 
     Improved CSS with new colours.
 
@@ -67,6 +63,5 @@ Video Demonstration
 https://youtu.be/CXm3cG4nTtE
 
 Conclusion
-
 
 Thank you for reviewing my Portfolio of Evidence. I welcome any feedback and look forward to further developing my skills in mobile application development.
