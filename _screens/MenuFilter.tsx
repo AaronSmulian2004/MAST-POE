@@ -1,74 +1,97 @@
 import React, { useState } from 'react';
-import {View,Text,FlatList,StyleSheet,} from 'react-native';
-import { Menu } from './RootStackParams';
+import {View, Text, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import { Menu } from '../App';
 import { Picker } from '@react-native-picker/picker';
 
-export default function FilterMenuScreen() {
-  const [selectedValue, setSelectedValue] = useState('Starter');
-  const [menuItems] = useState<Menu[]>([
-
-
-  ]); 
-
-  const filteredItems = menuItems.filter(item => item.Value === selectedValue);
-
-  return (
-    <View style={styles.container}>
-      <Picker
-        selectedValue={selectedValue}
-        onValueChange={(itemValue: React.SetStateAction<string>) => setSelectedValue(itemValue)}
-      >
-        <Picker.Item label="Starters" value="Starter" />
-        <Picker.Item label="Mains" value="Main" />
-        <Picker.Item label="Desserts" value="Dessert" />
-      </Picker>
-
-      <FlatList
-        data={filteredItems}
-        renderItem={({ item }) => (
-          <View style={styles.menuItem}>
-            <Text>{item.DishName}</Text>
-            <Text>{item.Price}</Text>
-          </View>
-        )}
-      />
-    </View>
-  );
+type Props = {
+    Menus: Menu[];
 }
 
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 20,
-      backgroundColor: '#f9f9f9', // Light neutral background for readability
-    },
-    picker: {
-      height: 50,
-      marginBottom: 20,
-      backgroundColor: '#fff',
-      borderRadius: 8,
-      borderWidth: 1,
-      borderColor: '#ccc',
-      paddingHorizontal: 10,
-    },
-    menuItem: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: 15,
-      marginBottom: 10,
-      backgroundColor: '#fff',
-      borderRadius: 8,
-      elevation: 2, // Adds a shadow for better distinction
-    },
-    menuItemText: {
-      fontSize: 16,
-      color: '#333',
-    },
-    priceText: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      color: '#007BFF', // Distinct color for prices
-    },
-  });
-  
+const MenuFilter: React.FC<Props> = ({ Menus }) => {
+    const [selectedValue, setSelectedValue] = useState('All');
+
+    const filteredItems = selectedValue === 'All' ? Menus : Menus.filter(item => item.Course === selectedValue);
+
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            padding: 20,
+            backgroundColor: '#f0f8ff', // AliceBlue
+        },
+        title: {
+            fontSize: 28,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            color: '#1e90ff', // DodgerBlue
+            marginBottom: 20,
+        },
+        picker: {
+            backgroundColor: 'white',
+            borderWidth: 1,
+            borderColor: '#ccc',
+            borderRadius: 8,
+            paddingVertical: 10,
+            paddingHorizontal: 15,
+            marginBottom: 20,
+            fontSize: 16,
+            color: '#333',
+        },
+        menuItem: {
+            backgroundColor: 'white',
+            padding: 15,
+            marginBottom: 10,
+            borderRadius: 8,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.84,
+            elevation: 5,
+        },
+        menuItemText: {
+            fontSize: 18,
+            color: '#333',
+            marginBottom: 5,
+        },
+        menuItemCourse: {
+            fontSize: 14,
+            color: '#666',
+        },
+        menuItemPrice: {
+            fontSize: 16,
+            fontWeight: 'bold',
+            color: '#1e90ff', // DodgerBlue
+        },
+    });
+
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}>Menu Filter</Text>
+            <Picker
+                selectedValue={selectedValue}
+                style={styles.picker}
+                onValueChange={(itemValue: string) => setSelectedValue(itemValue)}
+            >
+                <Picker.Item label="All" value="All" />
+                <Picker.Item label="Starter" value="Starter" />
+                <Picker.Item label="Main" value="Main" />
+                <Picker.Item label="Dessert" value="Dessert" />
+                <Picker.Item label="Side Dish" value="Side Dish" />
+                <Picker.Item label="Drink" value="Drink" />
+            </Picker>
+
+            <FlatList
+                data={filteredItems}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item }) => (
+                    <View style={styles.menuItem}>
+                        <Text style={styles.menuItemText}>{item.DishName}</Text>
+                        <Text style={styles.menuItemCourse}>{item.Course}</Text>
+                        <Text style={styles.menuItemPrice}>R{item.Price.toFixed(2)}</Text>
+                    </View>
+                )}
+            />
+        </View>
+    );
+}
+
+export default MenuFilter;
